@@ -841,9 +841,9 @@ def render_dashboard(
     )
     ax_spi.grid(True, alpha=0.3)
 
-    # SPI annotation box below legend
+    # SPI annotation box — positioned below legend in right margin
     ax_spi.text(
-        1.02, 0.08,
+        1.02, 0.55,
         "30-day SPI from field daily precip.\n"
         "Gamma distribution per DOY\n"
         "(±14d window, 5-yr archive)\n"
@@ -852,12 +852,12 @@ def render_dashboard(
         ha="left", va="top",
         fontsize=6.5, color="#555555",
         linespacing=1.2,
-        bbox=dict(boxstyle="round,pad=0.3", facecolor="#F8F9F9", edgecolor="#BDC3C7", alpha=0.85),
+        bbox=dict(boxstyle="round,pad=0.25", facecolor="#F8F9F9", edgecolor="#BDC3C7", alpha=0.85),
     )
 
-    # AWC metric explanation below SPI panel
+    # AWC metric explanation — stacked below SPI method annotation
     ax_spi.text(
-        1.02, -0.05,
+        1.02, 0.30,
         "AWC = SSURGO soil water capacity\n"
         "(inches water / foot of soil).\n"
         "Lower value → higher drought risk.\n"
@@ -866,7 +866,7 @@ def render_dashboard(
         ha="left", va="top",
         fontsize=6.5, color="#555555",
         linespacing=1.2,
-        bbox=dict(boxstyle="round,pad=0.3", facecolor="#F8F9F9", edgecolor="#BDC3C7", alpha=0.85),
+        bbox=dict(boxstyle="round,pad=0.25", facecolor="#F8F9F9", edgecolor="#BDC3C7", alpha=0.85),
     )
 
     # Format x-axis for all shared axes
