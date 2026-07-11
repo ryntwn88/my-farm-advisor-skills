@@ -843,11 +843,25 @@ def render_dashboard(
 
     # SPI annotation box below legend
     ax_spi.text(
-        1.03, 0.35,
+        1.02, 0.08,
         "30-day SPI from field daily precip.\n"
         "Gamma distribution per DOY\n"
         "(±14d window, 5-yr archive)\n"
         "→ standard normal transform.",
+        transform=ax_spi.transAxes,
+        ha="left", va="top",
+        fontsize=6.5, color="#555555",
+        linespacing=1.2,
+        bbox=dict(boxstyle="round,pad=0.3", facecolor="#F8F9F9", edgecolor="#BDC3C7", alpha=0.85),
+    )
+
+    # AWC metric explanation below SPI panel
+    ax_spi.text(
+        1.02, -0.05,
+        "AWC = SSURGO soil water capacity\n"
+        "(inches water / foot of soil).\n"
+        "Lower value → higher drought risk.\n"
+        "Source: USDA NRCS SSURGO.",
         transform=ax_spi.transAxes,
         ha="left", va="top",
         fontsize=6.5, color="#555555",
