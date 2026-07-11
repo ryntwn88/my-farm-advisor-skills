@@ -9,8 +9,8 @@ Farm advisors need a fast, repeatable way to read the seasonal story of a field:
 ## What it produces
 
 - A multi-panel static PNG dashboard saved to the field's `derived/reports/` directory.
-- Panels: header info, NDVI time series, daily precipitation, temperature min/max/avg, cumulative GDD.
-- Auto-detected and annotated events: heavy rain, hot days, cool periods, NDVI dips, rapid NDVI increases.
+- Panels: header info, NDVI time series, daily precipitation, temperature min/max/avg, cumulative GDD, **30-day SPI drought context**.
+- Auto-detected and annotated events: heavy rain, hot days, cool periods, NDVI dips, rapid NDVI increases, drought onset/recovery, wet spells.
 - A short generated seasonal caption at the bottom.
 
 ## Data sources
@@ -23,6 +23,7 @@ All inputs are read from the approved data-pipeline runtime:
 | Sentinel NDVI | `{field}/satellite/sentinel/manifest.json` → per-scene `*_ndvi.tif` |
 | Field boundary | `{field}/boundary/field_boundary.geojson` |
 | CDL crop-year | `{field}/derived/tables/ndvi_year_crop_join.csv` |
+| SSURGO soil AWC | `{field}/soil/ssurgo_summary.csv` |
 
 ## Architecture
 
@@ -41,13 +42,13 @@ All inputs are read from the approved data-pipeline runtime:
 ```bash
 cd ~/my-farm-advisor-runtime/data-pipeline/src
 python ~/my-farm-advisor-skills/my-farm-advisor/eda/field-season-dashboard/scripts/field_season_dashboard.py \
-  --grower ia-grower \
-  --farm ia-grower-iowa \
-  --field osm-1360326425 \
+  --grower ne-grower \
+  --farm ne-grower-nebraska \
+  --field osm-554936502 \
   --year 2025
 ```
 
-Output: `growers/ia-grower/farms/ia-grower-iowa/fields/osm-1360326425/derived/reports/field_season_dashboard_2025.png`
+Output: `growers/ne-grower/farms/ne-grower-nebraska/fields/osm-554936502/derived/reports/field_season_dashboard_2025.png`
 
 ## Documentation
 
