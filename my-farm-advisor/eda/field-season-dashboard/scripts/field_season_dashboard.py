@@ -841,9 +841,9 @@ def render_dashboard(
     )
     ax_spi.grid(True, alpha=0.3)
 
-    # SPI annotation box — positioned below legend in right margin
+    # SPI annotation box — positioned well below legend in right margin
     ax_spi.text(
-        1.02, 0.55,
+        1.02, 0.48,
         "30-day SPI from field daily precip.\n"
         "Gamma distribution per DOY\n"
         "(±14d window, 5-yr archive)\n"
@@ -857,7 +857,7 @@ def render_dashboard(
 
     # AWC metric explanation — stacked below SPI method annotation
     ax_spi.text(
-        1.02, 0.30,
+        1.02, 0.22,
         "AWC = SSURGO soil water capacity\n"
         "(inches water / foot of soil).\n"
         "Lower value → higher drought risk.\n"
