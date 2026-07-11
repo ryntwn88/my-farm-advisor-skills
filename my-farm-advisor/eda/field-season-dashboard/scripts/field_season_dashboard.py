@@ -694,7 +694,11 @@ def render_dashboard(
             ev_date = ev["date"]
             if gs_start <= ev_date <= gs_end:
                 ax_temp.axvline(ev_date, color="#C0392B", linestyle="--", alpha=0.4, lw=0.8)
-        # Cool periods
+        # Cool periods — add legend proxy first
+        ax_temp.axvspan(
+            pd.Timestamp.min, pd.Timestamp.min, color="#5DADE2", alpha=0.15,
+            label="Cool period (≥3d <10°C max)",
+        )
         for ev in w_events["cool_periods"]:
             start, end = ev["start"], ev["end"]
             if start < gs_start:
@@ -836,6 +840,20 @@ def render_dashboard(
         framealpha=0.9,
     )
     ax_spi.grid(True, alpha=0.3)
+
+    # SPI annotation box below legend
+    ax_spi.text(
+        1.03, 0.52,
+        "30-day SPI from field daily precip.\n"
+        "Gamma distribution per DOY\n"
+        "(±14d window, 5-yr archive)\n"
+        "→ standard normal transform.",
+        transform=ax_spi.transAxes,
+        ha="left", va="top",
+        fontsize=6.5, color="#555555",
+        linespacing=1.2,
+        bbox=dict(boxstyle="round,pad=0.3", facecolor="#F8F9F9", edgecolor="#BDC3C7", alpha=0.85),
+    )
 
     # Format x-axis for all shared axes
     for ax in [ax_ndvi, ax_precip, ax_temp, ax_gdd, ax_spi]:
