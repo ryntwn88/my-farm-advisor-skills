@@ -573,14 +573,14 @@ def render_dashboard(
     gs_end = pd.Timestamp(f"{year}-{_GS_END_MONTH_DAY[0]:02d}-{_GS_END_MONTH_DAY[1]:02d}")
     wdisp = weather[(weather["date"] >= gs_start) & (weather["date"] <= gs_end)].copy()
 
-    fig = plt.figure(figsize=(14, 14))
+    fig = plt.figure(figsize=(16, 14))
     gs = fig.add_gridspec(
         nrows=7,
         ncols=1,
         height_ratios=[0.08, 1.0, 1.0, 1.0, 1.0, 1.0, 0.12],
         hspace=0.35,
         left=0.08,
-        right=0.92,
+        right=0.82,
         top=0.94,
         bottom=0.06,
     )
@@ -713,7 +713,12 @@ def render_dashboard(
                 )
     ax_temp.set_ylabel("Temperature (°C)")
     ax_temp.set_title("Temperature (Min / Avg / Max)")
-    ax_temp.legend(loc="upper right")
+    ax_temp.legend(
+        loc="upper left",
+        bbox_to_anchor=(1.02, 1.0),
+        borderaxespad=0,
+        framealpha=0.9,
+    )
     ax_temp.grid(True, alpha=0.3)
 
     # ---- Cumulative GDD panel ---------------------------------------------
@@ -823,7 +828,13 @@ def render_dashboard(
     ax_spi.set_ylabel("SPI")
     ax_spi.set_title("30-Day Standardized Precipitation Index (SPI)")
     ax_spi.set_ylim(-3.0, 3.0)
-    ax_spi.legend(loc="upper right", ncol=3, framealpha=0.9)
+    ax_spi.legend(
+        loc="upper left",
+        bbox_to_anchor=(1.02, 1.0),
+        borderaxespad=0,
+        ncol=1,
+        framealpha=0.9,
+    )
     ax_spi.grid(True, alpha=0.3)
 
     # Format x-axis for all shared axes
