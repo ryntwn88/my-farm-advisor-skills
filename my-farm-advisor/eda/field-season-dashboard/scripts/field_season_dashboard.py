@@ -843,7 +843,7 @@ def render_dashboard(
 
     # SPI annotation box below legend
     ax_spi.text(
-        1.03, 0.52,
+        1.03, 0.35,
         "30-day SPI from field daily precip.\n"
         "Gamma distribution per DOY\n"
         "(±14d window, 5-yr archive)\n"
