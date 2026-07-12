@@ -829,9 +829,9 @@ def render_dashboard(
     )
     ax_spi.grid(True, alpha=0.3)
 
-    # SPI annotation box — positioned to the right of the legend
+    # SPI annotation box — directly below legend in same column
     ax_spi.text(
-        1.20, 0.48,
+        1.02, 0.72,
         "30-day SPI from field daily precip.\n"
         "Gamma distribution per DOY\n"
         "(±14d window, 5-yr archive)\n"
