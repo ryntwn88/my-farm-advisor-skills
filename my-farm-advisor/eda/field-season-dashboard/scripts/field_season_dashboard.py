@@ -820,7 +820,7 @@ def render_dashboard(
     ax_spi.set_ylabel("SPI")
     ax_spi.set_title("30-Day Standardized Precipitation Index (SPI)")
     ax_spi.set_ylim(-3.0, 3.0)
-    ax_spi.legend(
+    spi_legend = ax_spi.legend(
         loc="upper left",
         bbox_to_anchor=(1.02, 1.0),
         borderaxespad=0,
@@ -829,9 +829,17 @@ def render_dashboard(
     )
     ax_spi.grid(True, alpha=0.3)
 
-    # SPI annotation box — directly below legend in same column
+    # Dynamically position annotation below the rendered legend
+    fig.canvas.draw()
+    legend_bbox = spi_legend.get_window_extent()
+    # Convert legend bottom from display to axes coordinates
+    _, legend_bottom_disp = legend_bbox.min
+    _, legend_bottom_axes = ax_spi.transData.inverted().transform((0, legend_bottom_disp))
+    # Clamp to valid axes range and add small gap
+    annotation_y = max(0.05, legend_bottom_axes - 0.05)
+
     ax_spi.text(
-        1.02, 0.72,
+        1.02, annotation_y,
         "30-day SPI from field daily precip.\n"
         "Gamma distribution per DOY\n"
         "(±14d window, 5-yr archive)\n"
