@@ -812,20 +812,8 @@ def render_dashboard(
                     arrowprops=dict(arrowstyle="->", color="#2980B9", lw=0.8),
                 )
 
-        # AWC context note
-        if awc.get("total_aws_inches") is not None:
-            aws = awc["total_aws_inches"]
-            drain = awc.get("drainage_class", "")
-            note = f"AWC: {aws:.1f} in/ft"
-            if drain:
-                note += f"  |  {drain}"
-            ax_spi.text(
-                0.98, 0.02, note,
-                transform=ax_spi.transAxes,
-                ha="right", va="bottom",
-                fontsize=7, color="#555555",
-                bbox=dict(boxstyle="round,pad=0.25", facecolor="#F8F9F9", edgecolor="#BDC3C7", alpha=0.8),
-            )
+        # AWC context note removed per user request
+        pass
     else:
         ax_spi.text(0.5, 0.5, "No SPI data available", transform=ax_spi.transAxes, ha="center", va="center")
 
@@ -848,20 +836,6 @@ def render_dashboard(
         "Gamma distribution per DOY\n"
         "(±14d window, 5-yr archive)\n"
         "→ standard normal transform.",
-        transform=ax_spi.transAxes,
-        ha="left", va="top",
-        fontsize=6.5, color="#555555",
-        linespacing=1.2,
-        bbox=dict(boxstyle="round,pad=0.25", facecolor="#F8F9F9", edgecolor="#BDC3C7", alpha=0.85),
-    )
-
-    # AWC metric explanation — to the right of the legend, below method annotation
-    ax_spi.text(
-        1.20, 0.22,
-        "AWC = SSURGO soil water capacity\n"
-        "(inches water / foot of soil).\n"
-        "Lower value → higher drought risk.\n"
-        "Source: USDA NRCS SSURGO.",
         transform=ax_spi.transAxes,
         ha="left", va="top",
         fontsize=6.5, color="#555555",
