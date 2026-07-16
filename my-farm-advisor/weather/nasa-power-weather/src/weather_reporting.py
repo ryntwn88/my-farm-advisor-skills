@@ -79,7 +79,13 @@ def plot_temperature_doy_overlay(
     ax, weather: pd.DataFrame, title: str = "Temperature by day-of-year"
 ):
     df = prepare_weather_reporting(weather)
-    for year, group in df.groupby("year"):
+    # Aggregate across all fields so each year plots a single farm-average line.
+    agg = (
+        df.groupby(["year", "doy"], as_index=False)
+        .agg({"T2M": "mean"})
+        .sort_values(["year", "doy"])
+    )
+    for year, group in agg.groupby("year"):
         # Add NaN after each year to prevent line connection to next year
         group_plot = pd.concat(
             [group[["doy", "T2M"]], pd.DataFrame({"doy": [np.nan], "T2M": [np.nan]})]
@@ -105,7 +111,13 @@ def plot_gdd_doy_overlay(
     ax, weather: pd.DataFrame, title: str = "Cumulative GDD by day-of-year"
 ):
     df = prepare_weather_reporting(weather)
-    for year, group in df.groupby("year"):
+    # Aggregate across all fields so each year plots a single farm-average line.
+    agg = (
+        df.groupby(["year", "doy"], as_index=False)
+        .agg({"gdd_cumulative": "mean"})
+        .sort_values(["year", "doy"])
+    )
+    for year, group in agg.groupby("year"):
         # Add NaN after each year to prevent line connection to next year
         group_plot = pd.concat(
             [
@@ -134,8 +146,14 @@ def plot_precip_boxplot(
     ax, weather: pd.DataFrame, title: str = "Cumulative precipitation by day-of-year"
 ):
     df = prepare_weather_reporting(weather)
-    for year, group in df.groupby("year"):
-        ordered = group.sort_values("date").copy()
+    # Aggregate daily precipitation across all fields, then cumulate per year.
+    agg = (
+        df.groupby(["year", "doy"], as_index=False)
+        .agg({"PRECTOTCORR": "mean"})
+        .sort_values(["year", "doy"])
+    )
+    for year, group in agg.groupby("year"):
+        ordered = group.copy()
         ordered["precip_cumulative"] = ordered["PRECTOTCORR"].cumsum()
         # Add NaN after each year to prevent line connection to next year
         ordered_plot = pd.concat(
